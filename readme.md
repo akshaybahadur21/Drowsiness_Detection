@@ -26,11 +26,15 @@ Each eye is represented by 6 (x, y)-coordinates, starting at the left-corner of 
 
 <img src="https://github.com/akshaybahadur21/Drowsiness_Detection/blob/master/eye1.jpg">
 
-##### Relationship
+### Condition
+
+It checks 20 consecutive frames and if the Eye Aspect ratio is lesst than 0.25, Alert is generated.
+
+#### Relationship
 
 <img src="https://github.com/akshaybahadur21/Drowsiness_Detection/blob/master/eye2.png">
 
-##### Summing up
+#### Summing up
 
 <img src="https://github.com/akshaybahadur21/Drowsiness_Detection/blob/master/eye3.jpg">
 
