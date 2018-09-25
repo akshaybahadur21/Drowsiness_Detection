@@ -14,10 +14,10 @@ def eye_aspect_ratio(eye):
 thresh = 0.25
 frame_check = 20
 detect = dlib.get_frontal_face_detector()
-predict = dlib.shape_predictor("C:\Users\akshaybahadur21\Documents\GitHub\Drowsiness_Detection|\shape_predictor_68_face_landmarks.dat")# Dat file is the crux of the code
+predict = dlib.shape_predictor("E:\Github projects\Drowsiness_Detection_fork\shape_predictor_68_face_landmarks.dat")# Dat file is the crux of the code
 
-(lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
-(rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
+(lStart, lEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["left_eye"]
+(rStart, rEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["right_eye"]
 cap=cv2.VideoCapture(0)
 flag=0
 while True:
