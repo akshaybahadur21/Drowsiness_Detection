@@ -3,12 +3,26 @@ from __future__ import division
 from scipy.spatial import distance
 from imutils import face_utils
 import imutils
+from imutils.video import VideoStream
 import dlib
 import cv2
-
 import math
-
 from pyaudio import PyAudio
+import argparse
+
+def arg_conv(str):
+    if str.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif str.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Please enter a boolean value like true or false!')
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-p", "--picamera", type=arg_conv, default=False,
+	help="whether or not the Raspberry Pi camera should be used")
+args = vars(ap.parse_args())
+isRaspberryPi = 1 if args['picamera'] else 0
 
 p = PyAudio()
 stream = p.open(format=p.get_format_from_width(1), # 8bit
@@ -37,12 +51,12 @@ predict = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")# Dat fil
 
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["right_eye"]
-cap=cv2.VideoCapture(0)
+cap = VideoStream(usePiCamera=isRaspberryPi).start()
 flag = 0
 eyesNotVisible = 0
 framesEyesNotVisible = 50
 while True:
-	ret, frame=cap.read()
+	frame = cap.read()
 	frame = imutils.resize(frame, width=450)
 	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 	subjects = detect(gray, 0)
@@ -90,4 +104,4 @@ stream.close()
 p.terminate()
 
 cv2.destroyAllWindows()
-cap.release()
+cap.stop()
