@@ -2,7 +2,9 @@
 
 ## Install Instructions
 
-### 1. Install Python3 (the latest version). You can do this by doing one of the following based on your operating system.
+### 1. Install Python3 (the latest version). 
+
+You can do this by doing one of the following based on your operating system.
 
 #### Windows:
 Download python at the following url: [https://www.python.org/downloads/](https://www.python.org/downloads/). Make sure to download the latest version that formatted like this `Python 3.X.X`.
@@ -21,12 +23,16 @@ Next, install python with the following command.
 brew install python
 ```
 
-### 2. Clone this GitHub Repository. You can do that by typing the following command:
+### 2. Clone this GitHub Repository. 
+
+You can do that by typing the following command:
 ```
 git clone https://github.com/rithik/ENGR1624
 ```
 
-### 3. Create a Virtual Environment (you can skip this step if you want). A Virtual Environment only installs packages for that project and not for your entire computer. Use the following commands:
+### 3. Create a Virtual Environment (you can skip this step if you want). 
+
+A Virtual Environment only installs packages for that project and not for your entire computer. Use the following commands:
 
 ```
 virtualenv venv
