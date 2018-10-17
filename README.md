@@ -37,6 +37,10 @@ If `virtualenv` is not installed, use this command: `pip3 install virtualenv`. T
 
 To get out of your virtual environment, use the command `deactivate`.
 
-### 4. Run the following command to install all of the required packages `pip3 install -r requirements.txt`. If you run into issues installing the `opencv` package, use this link for help: [https://pypi.org/project/opencv-python/](https://pypi.org/project/opencv-python/).
+### 4. Install all of the required libraries. 
 
-### 5. Start the program by typing `python3 detection.py`. To quit out of the program, click on the window with your video feed and hit the `q` key.
+Run the following command to install all of the required packages `pip3 install -r requirements.txt`. If you run into issues installing the `opencv` package, use this link for help: [https://pypi.org/project/opencv-python/](https://pypi.org/project/opencv-python/).
+
+### 5. Run the program. 
+
+Start the program by typing `python3 detection.py`. To quit out of the program, click on the window with your video feed and hit the `q` key.
