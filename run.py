@@ -23,8 +23,10 @@ isRaspberryPi = 1 if args['picamera'] else 0
 while moving:
     if moving and proc is None:
         proc = subprocess.Popen(['python3', 'detection.py', '-p', str(isRaspberryPi)])
-        time.sleep(20)
+        time.sleep(20) # remove this line -- used for debugging
+        moving = False
     elif not moving and not proc is None:
         proc.terminate()
         proc = None
         moving = False
+
