@@ -10,6 +10,11 @@ import math
 from pyaudio import PyAudio
 import argparse
 
+from picamera import PiCamera
+from picamera.array import PiRGBArray
+import time
+
+
 def arg_conv(str):
     if str.lower() in ('yes', 'true', 't', 'y', '1'):
         return True
@@ -25,8 +30,13 @@ args = vars(ap.parse_args())
 isRaspberryPi = 1 if args['picamera'] else 0
 
 p = PyAudio()
+""" DETECT CARD NUMBER FOR AUDIO
+for i in range (p.get_device_count()):
+	dev=p.get_device_info_by_index(i)
+	print((i,dev['name'],dev['maxInputChannels']))
+"""
 stream = p.open(format=p.get_format_from_width(1), # 8bit
-                channels=1, # mono
+                channels=2, # mono
                 rate=22050,
                 output=True)
 
@@ -51,13 +61,22 @@ predict = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")# Dat fil
 
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["right_eye"]
-cap = VideoStream(usePiCamera=isRaspberryPi).start()
+
+camera=PiCamera()
+camera.resolution=(640,480)
+camera.framerate=32
+rawCapture=PiRGBArray(camera,size=(640,480))
+time.sleep(0.1)
 flag = 0
 eyesNotVisible = 0
 framesEyesNotVisible = 50
-while True:
-	frame = cap.read()
-	frame = imutils.resize(frame, width=450)
+
+
+
+for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+	image=frame.array
+	play_sound()
+	frame = imutils.resize(image, width=450)
 	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 	subjects = detect(gray, 0)
 	if (len(subjects) == 0):
@@ -95,12 +114,16 @@ while True:
 		else:
 			flag = 0
 	cv2.imshow("Frame", frame)
+	rawCapture.truncate()
+	rawCapture.seek(0)
+
+
 	key = cv2.waitKey(1) & 0xFF
 	if key == ord("q"):
 		break
 
-stream.stop_stream()
-stream.close()
+#stream.stop_stream()
+#stream.close()
 p.terminate()
 
 cv2.destroyAllWindows()
