@@ -13,7 +13,7 @@ import argparse
 from picamera import PiCamera
 from picamera.array import PiRGBArray
 import time
-
+import datetime
 
 def arg_conv(str):
     if str.lower() in ('yes', 'true', 't', 'y', '1'):
@@ -69,58 +69,62 @@ rawCapture=PiRGBArray(camera,size=(640,480))
 time.sleep(0.1)
 flag = 0
 eyesNotVisible = 0
-framesEyesNotVisible = 50
+framesEyesNotVisible = 5
 
-
+frameRate = 0
+initial_time = datetime.datetime.now()
 
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-	image=frame.array
-	play_sound()
-	frame = imutils.resize(image, width=450)
-	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-	subjects = detect(gray, 0)
-	if (len(subjects) == 0):
-		eyesNotVisible+=1
-		if eyesNotVisible >= framesEyesNotVisible: # Distracted checker
-			play_sound()
-			cv2.putText(frame, "****************DISTRACTED!****************", (10, 30),
-				cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-			cv2.putText(frame, "****************DISTRACTED!****************", (10,325),
-				cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-			play_sound(volume=0)
-	else:
-		eyesNotVisible = 0
-	for subject in subjects:
-		shape = predict(gray, subject)
-		shape = face_utils.shape_to_np(shape)#converting to NumPy Array
-		leftEye = shape[lStart:lEnd]
-		rightEye = shape[rStart:rEnd]
-		leftEAR = eye_aspect_ratio(leftEye)
-		rightEAR = eye_aspect_ratio(rightEye)
-		ear = (leftEAR + rightEAR) / 2.0
-		leftEyeHull = cv2.convexHull(leftEye)
-		rightEyeHull = cv2.convexHull(rightEye)
-		cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
-		cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
-		if ear < thresh: # Drowsiness Detector
-			flag += 1
-			#print (flag)
-			if flag >= frame_check:
-				cv2.putText(frame, "****************ALERT!****************", (10, 30),
-					cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-				cv2.putText(frame, "****************ALERT!****************", (10,325),
-					cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-				#print ("Drowsy")
-		else:
-			flag = 0
-	cv2.imshow("Frame", frame)
-	rawCapture.truncate()
-	rawCapture.seek(0)
+    frameRate+=1
+    time = (datetime.datetime.now() - initial_time).total_seconds()
+    print(frameRate/time)
+    image=frame.array
+    play_sound()
+    frame = imutils.resize(image, width=450)
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    subjects = detect(gray, 0)
+    if (len(subjects) == 0):
+    	eyesNotVisible+=1
+    	if eyesNotVisible >= framesEyesNotVisible: # Distracted checker
+    		play_sound()
+    		cv2.putText(frame, "****************DISTRACTED!****************", (10, 30),
+    			cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+    		cv2.putText(frame, "****************DISTRACTED!****************", (10,325),
+    			cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+    		play_sound(volume=0)
+    else:
+    	eyesNotVisible = 0
+    for subject in subjects:
+    	shape = predict(gray, subject)
+    	shape = face_utils.shape_to_np(shape)#converting to NumPy Array
+    	leftEye = shape[lStart:lEnd]
+    	rightEye = shape[rStart:rEnd]
+    	leftEAR = eye_aspect_ratio(leftEye)
+    	rightEAR = eye_aspect_ratio(rightEye)
+    	ear = (leftEAR + rightEAR) / 2.0
+    	leftEyeHull = cv2.convexHull(leftEye)
+    	rightEyeHull = cv2.convexHull(rightEye)
+    	cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
+    	cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
+    	if ear < thresh: # Drowsiness Detector
+    		flag += 1
+    		#print (flag)
+    		if flag >= frame_check:
+    			cv2.putText(frame, "****************ALERT!****************", (10, 30),
+    				cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+    			cv2.putText(frame, "****************ALERT!****************", (10,325),
+    				cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
+    			#print ("Drowsy")
+    	else:
+    		flag = 0
+    cv2.imshow("Frame", frame)
+    rawCapture.truncate()
+    rawCapture.seek(0)
 
 
-	key = cv2.waitKey(1) & 0xFF
-	if key == ord("q"):
-		break
+    key = cv2.waitKey(1) & 0xFF
+    if key == ord("q"):
+    	break
 
 #stream.stop_stream()
 #stream.close()
@@ -128,4 +132,3 @@ p.terminate()
 
 cv2.destroyAllWindows()
 cap.stop()
-
