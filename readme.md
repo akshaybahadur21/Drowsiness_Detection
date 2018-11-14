@@ -50,4 +50,3 @@ Run the following command to install all of the required packages `pip3 install 
 ### 5. Run the program. 
 
 Start the program by typing `python3 detection.py`. To quit out of the program, click on the window with your video feed and hit the `q` key.
-
