@@ -1,5 +1,6 @@
+FRAMES = 10
 class detector():
-    def __init__(self,eyesNotVisibleTime=2000,frame_check_time=2000):
+    def __init__(self,eyesNotVisibleTime=FRAMES,frame_check_time=FRAMES):
         import dlib
         import cv2
         from scipy.spatial import distance
@@ -40,7 +41,7 @@ class detector():
             if self.eyesNotVisible >= self.tEyesNotVisible: # Distracted checker
                 return True
         else:
-            eyesNotVisible = 0
+            self.eyesNotVisible = 0
         for subject in subjects:
             shape = self.predict(gray, subject)
             shape = face_utils.shape_to_np(shape)#converting to NumPy Array
