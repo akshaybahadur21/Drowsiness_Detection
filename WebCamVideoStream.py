@@ -10,7 +10,7 @@ class WebCamVideoStream:
 		return
 
 	def close(self):
-		cap.stop()
+		self.cap.stop()
 		return
 
 
