@@ -42,26 +42,7 @@ class detector():
                 return True
         else:
             self.eyesNotVisible = 0
-        for subject in subjects:
-            shape = self.predict(gray, subject)
-            shape = face_utils.shape_to_np(shape)#converting to NumPy Array
-            leftEye = shape[self.lStart:self.lEnd]
-            rightEye = shape[self.rStart:self.rEnd]
-            leftEAR = self.eye_aspect_ratio(leftEye)
-            rightEAR = self.eye_aspect_ratio(rightEye)
-            ear = (leftEAR + rightEAR) / 2.0
-            leftEyeHull = cv2.convexHull(leftEye)
-            rightEyeHull = cv2.convexHull(rightEye)
-            if drawing:
-                cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
-                cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
-            if ear < self.thresh: # Drowsiness Detector
-                self.flag += 1
-                if self.flag >= self.frame_check:
-                    return True
-            else:
-                self.flag = 0
-                return False
+        return False
 
     def display_warnings(self,frame):
         import cv2
