@@ -1,8 +1,8 @@
+from pyaudio import PyAudio
+import math
+
 class SoundDriver():
     def __init__(self,eyesNotVisibleTime=2000,frame_check_time=2000):
-        from pyaudio import PyAudio
-        import math
-
         self.p = PyAudio()
         self.stream = self.p.open(format=self.p.get_format_from_width(1), # 8bit
                 channels=2, # mono

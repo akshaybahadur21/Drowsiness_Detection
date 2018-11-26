@@ -7,14 +7,9 @@ camera = PiCamera()
 camera.framerate=32
 camera.resolution=(640,480)
 
-
 rawCapture = PiRGBArray(camera,size=(640,480))
 
-
 time.sleep(0.1)
-
-
-
 
 """ Single Shot CAMERA
 camera.capture(rawCapture, format = "bgr")

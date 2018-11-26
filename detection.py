@@ -5,7 +5,7 @@ import time
 import datetime
 import cv2
 
-from detector import detector
+from detector import Detector
 from SoundDriver import SoundDriver
 
 
@@ -29,8 +29,7 @@ args = vars(ap.parse_args())
 if args["sound"]:
     SoundDriver = SoundDriver()
 
-
-detector = detector()
+detector = Detector()
 frameRate = 0
 initial_time = datetime.datetime.now()
 
@@ -44,7 +43,7 @@ else:
     VideoStream = WebCamVideoStream()
 
 
-while (True):
+while True:
     frame = VideoStream.getFrame()
     frameRate+=1
     time = (datetime.datetime.now() - initial_time).total_seconds()
@@ -62,16 +61,12 @@ while (True):
 
     if (args["display"]):
         detector.show(frame)
-    
+
     VideoStream.reset()
 
     key = cv2.waitKey(1) & 0xFF
     if key == ord("q"):
     	break
 
-#stream.stop_stream()
-#stream.close()
 VideoStream.close()
-
 cv2.destroyAllWindows()
-
