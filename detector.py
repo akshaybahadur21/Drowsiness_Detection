@@ -18,8 +18,8 @@ class Detector():
         self.eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
     def isDistracted(self, frame, drawing):
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        eyes = eye_cascade.detectMultiScale(gray)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        eyes = self.eye_cascade.detectMultiScale(gray)
         print(len(eyes))
         # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         # subjects = self.detect(gray, 0)
