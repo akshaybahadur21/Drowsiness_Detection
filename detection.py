@@ -48,8 +48,7 @@ while True:
     frameRate+=1
     time = (datetime.datetime.now() - initial_time).total_seconds()
     if args["analytics"]:
-        print(1/time)
-    initial_time = datetime.datetime.now()
+        print(frameRate/time)
     frame = imutils.resize(frame, width=450)
     distracted= detector.isDistracted(frame,args["display"])
 
