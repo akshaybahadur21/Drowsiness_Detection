@@ -20,15 +20,14 @@ class Detector():
     def isDistracted(self, frame, drawing):
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         eyes = self.eye_cascade.detectMultiScale(gray)
-        print(len(eyes))
-        # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        # subjects = self.detect(gray, 0)
-        # if len(subjects) == 0:
-        #     self.eyesNotVisible+=1
-        #     if self.eyesNotVisible >= self.tEyesNotVisible: # Distracted checker
-        #         return True
-        # else:
-        #     self.eyesNotVisible = 0
+        if len(eyes) > 1:
+            self.eyesNotVisible = 0
+        else:
+            self.eyesNotVisible+=1
+            # print(self.eyesNotVisible)
+            if self.eyesNotVisible >= self.tEyesNotVisible: # Distracted checker
+                print("DISTRACTED")
+                return True
         return False
 
     def display_warnings(self, frame):
