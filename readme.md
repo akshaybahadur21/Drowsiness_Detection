@@ -14,7 +14,7 @@ The example code is in Python ([version 2.7](https://www.python.org/download/rel
 ### Dependencies
 
 1) import cv2
-2) import immutils
+2) import imutils
 3) import dlib
 4) import scipy
 
