@@ -3,7 +3,7 @@ from imutils import face_utils
 import imutils
 import dlib
 import cv2
-
+# function for calculating EAR(Eye aspect ratio)
 def eye_aspect_ratio(eye):
 	A = distance.euclidean(eye[1], eye[5])
 	B = distance.euclidean(eye[2], eye[4])
@@ -13,9 +13,10 @@ def eye_aspect_ratio(eye):
 	
 thresh = 0.25
 frame_check = 20
+#Load dlib shape detector
 detect = dlib.get_frontal_face_detector()
 predict = dlib.shape_predictor(".\shape_predictor_68_face_landmarks.dat")# Dat file is the crux of the code
-
+#Left and right eye landmarks index 
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_68_IDXS["right_eye"]
 cap=cv2.VideoCapture(0)
@@ -32,7 +33,7 @@ while True:
 		rightEye = shape[rStart:rEnd]
 		leftEAR = eye_aspect_ratio(leftEye)
 		rightEAR = eye_aspect_ratio(rightEye)
-		ear = (leftEAR + rightEAR) / 2.0
+		ear = (leftEAR + rightEAR) / 2.0 #Average of both eyes EAR
 		leftEyeHull = cv2.convexHull(leftEye)
 		rightEyeHull = cv2.convexHull(rightEye)
 		cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
