@@ -28,23 +28,23 @@ Each eye is represented by 6 (x, y)-coordinates, starting at the left-corner of 
 
 It checks 20 consecutive frames and if the Eye Aspect ratio is less than 0.25, Alert is generated.
 
-<img src="https://github.com/akshaybahadur21/Drowsiness_Detection/blob/master/eye1.jpg">
+<img src="https://github.com/akshaybahadur21/Drowsiness_Detection/blob/master/assets/eye1.jpg">
 
 
 #### Relationship
 
-<img src="https://github.com/akshaybahadur21/Drowsiness_Detection/blob/master/eye2.png">
+<img src="https://github.com/akshaybahadur21/Drowsiness_Detection/blob/master/assets/eye2.png">
 
 #### Summing up
 
-<img src="https://github.com/akshaybahadur21/Drowsiness_Detection/blob/master/eye3.jpg">
+<img src="https://github.com/akshaybahadur21/Drowsiness_Detection/blob/master/assets/eye3.jpg">
 
 
 For more information, [see](https://www.pyimagesearch.com/2017/05/08/drowsiness-detection-opencv/)
 
 ### Results 📊
 
-<img src="https://github.com/akshaybahadur21/Drowsiness_Detection/blob/master/drowsy.gif">
+<img src="https://github.com/akshaybahadur21/BLOB/blob/master/drowsy.gif">
 
 
 ### Execution 🐉
