@@ -53,4 +53,4 @@ while True:
 	if key == ord("q"):
 		break
 cv2.destroyAllWindows()
-cap.stop()
+cap.release() 
