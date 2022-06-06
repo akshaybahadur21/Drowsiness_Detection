@@ -54,6 +54,8 @@ To run the code, type `python Drowsiness_Detection.py`
 python Drowsiness_Detection.py
 ```
 
+###### Made with ❤️ and 🦙 by Akshay Bahadur
+
 ## References 🔱
  
  -   Adrian Rosebrock, [PyImageSearch Blog](https://www.pyimagesearch.com/2017/05/08/drowsiness-detection-opencv/)
